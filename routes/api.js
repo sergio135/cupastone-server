@@ -13,7 +13,6 @@ router.get('/', function(req, res) {
 
 // ruta de creacion de la API
 router.post('/create', function(req, res) {
-
     var crear = new voto ({
         agencia: req.body.agencia,
         opcion1: req.body.opcion1,
@@ -21,7 +20,7 @@ router.post('/create', function(req, res) {
         lista: req.body.lista
     });
 
-    if(crear.agencia && crear.opcion1) {
+    if(crear.agencia && crear.opcion1 && crear.opcion2 && crear.lista) {
         crear.save(function(err, result) {
         if(err) return res.status(500).send(err.message);
         res.status(200).jsonp(result);
