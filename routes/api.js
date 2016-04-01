@@ -10,22 +10,26 @@ router.get('/', function(req, res) {
     })
 });
 
+
 // ruta de creacion de la API
-router.get('/create', function(req, res) {
-    console.log(req.body);
+router.post('/create', function(req, res) {
 
     var crear = new voto ({
-        agencia: req.agencia,
-        opcion1: req.opcion1,
-        opcion2: req.opcion2,
-        lista: req.lista,
+        agencia: req.body.agencia,
+        opcion1: req.body.opcion1,
+        opcion2: req.body.opcion2,
+        lista: req.body.lista
     });
 
-    crear.save(function(err, result) {
+    if(crear.agencia && crear.opcion1) {
+        crear.save(function(err, result) {
         if(err) return res.status(500).send(err.message);
         res.status(200).jsonp(result);
-    });
-    res.send('crear datos');
+        });
+    } else {
+        res.status(500).send('datos incompletos');
+    }
 });
+
 
 module.exports = router;
