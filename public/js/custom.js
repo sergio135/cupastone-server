@@ -1,14 +1,16 @@
 $(window).load(function() {
     $('#tabs').jKit('tabs', { 'animation': 'slide' });
 
+
+
+
+
     $('.fecha').change(function() {
         var fechaDesde = $('#fecha-desde').val();
         var fechaHasta = $('#fecha-hasta').val();
         if (fechaDesde && fechaHasta) {
 
-
             var f1 = moment(fechaDesde);
-            f1.add(1,'d')
             console.log(f1.format('YYYY-MM-DD'));
             var f2 = moment(fechaHasta);
             console.log(f2.format('YYYY-MM-DD'));
@@ -18,36 +20,41 @@ $(window).load(function() {
             console.log('diffdays son: '+diffDays);
 
 
-
             function Peticiones() {
+
                 var f = moment(f1.format('YYYY-MM-DD'));
                 for (var i = 0; i < diffDays ; i++) {
 
                     var despues = moment(f.format('YYYY-MM-DD'));
-                    despues.add(4, 'd');
-
-                    var a = f.format('YYYY-MM-DD');
-                    var b = despues.format('YYYY-MM-DD');
-                    console.log(a);
-                    console.log(b);
+                    despues.add(1, 'd');
 
 
-                    /*
-                    $.get('/api', { fecha1: a, fecha2: b })
+                    myBarChart1.addData([0], f.format('DD/MM'))
+
+                    $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
                     .done(function(data) {
-                        console.log(data);
+
+                         console.log(data.length)
+
+
+                        myBarChart1.datasets[0].bars[i].value = data.length;
+                        myBarChart1.update();
+
+
                     })
                     .fail(function() {
                         alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
                     });
-                    */
-                    f.add(4, 'd');
+
+                    f.add(1, 'd');
                 }
+
+
             }
 
             Peticiones();
 
-
+            /*
             $.get('/api', { fecha1: f1.format(), fecha2: f2.format() })
             .done(function(data) {
                 console.log(data);
@@ -55,7 +62,7 @@ $(window).load(function() {
             .fail(function() {
                 alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
             });
-
+            */
 
         } else {
             console.log('mal')
@@ -63,10 +70,23 @@ $(window).load(function() {
     });
 
 
+    var dataChart = {
+        labels: ['test'],
+        datasets: [
+            {
+            label: "Clientes",
+            fillColor: "rgba(220,220,220,0.5)",
+            strokeColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data: [0]
+            }
+        ]
+    }
 
 
 
-    var data = {
+    var data2 = {
         labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
         datasets: [
             {
@@ -88,25 +108,17 @@ $(window).load(function() {
         ]
     }
 
-    var data2 = {
-        labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
-        datasets: [
-            {
-            label: "Clientes",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
-            }
-        ]
-    }
+
 
     var ctx1 = $("#myChart1").get(0).getContext("2d");
-    var myBarChart1 = new Chart(ctx1).Bar(data2);
+    var myBarChart1 = new Chart(ctx1).Bar(dataChart);
+
+
+
+
 
     var ctx2 = $("#myChart2").get(0).getContext("2d");
-    var myBarChart2 = new Chart(ctx2).Bar(data);
+    var myBarChart2 = new Chart(ctx2).Bar(data2);
 
 
     var data2 = [
