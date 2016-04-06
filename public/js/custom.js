@@ -1,11 +1,8 @@
 $(window).load(function() {
     $('#tabs').jKit('tabs', { 'animation': 'slide' });
 
-
-
-
-
     $('.fecha').change(function() {
+
         var fechaDesde = $('#fecha-desde').val();
         var fechaHasta = $('#fecha-hasta').val();
         if (fechaDesde && fechaHasta) {
@@ -19,59 +16,80 @@ $(window).load(function() {
             var diffDays = f2.diff(f1, 'days');
             console.log('diffdays son: '+diffDays);
 
+            grafica1();
+            grafica2();
 
-            function Peticiones() {
-
+            function grafica1() {
+                var te = myBarChart1.datasets[0].bars.length;
+                for (var j = 0; j < te ; j++) {
+                    myBarChart1.removeData()
+                }
+                var x = 0;
                 var f = moment(f1.format('YYYY-MM-DD'));
-                for (var i = 0; i < diffDays ; i++) {
-
+                for (var i = 0; i <= diffDays ; i++) {
                     var despues = moment(f.format('YYYY-MM-DD'));
                     despues.add(1, 'd');
-
-
-                    myBarChart1.addData([0], f.format('DD/MM'))
-
+                    myBarChart1.addData([0], f.format('DD/MM'));
                     $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
-                    .done(function(data) {
-
-                         console.log(data.length)
-
-
-                        myBarChart1.datasets[0].bars[i].value = data.length;
-                        myBarChart1.update();
-
-
-                    })
-                    .fail(function() {
-                        alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
-                    });
-
+                        .done(function(data) {
+                            myBarChart1.datasets[0].bars[x].value = data.length;
+                            myBarChart1.update();
+                            x++;
+                        })
+                        .fail(function() {
+                            alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
+                        });
                     f.add(1, 'd');
+            }}
+
+            function grafica2() {
+                var te = myBarChart2.datasets[0].bars.length;
+                for (var j = 0; j < te ; j++) {
+                    myBarChart2.removeData()
                 }
+                var x = 0;
+                var y = 0;
+                var f = moment(f1.format('YYYY-MM-DD'));
+                for (var i = 0; i <= diffDays ; i++) {
+                    var despues = moment(f.format('YYYY-MM-DD'));
+                    despues.add(1, 'd');
+                    myBarChart2.addData([0,0], f.format('DD/MM'));
+                    $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
+                        .done(function(data) {
+                            myBarChart2.datasets[0].bars[x].value = data.length;
+                            myBarChart2.update();
+                            x++;
+                        })
+                        .fail(function() {
+                            alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
+                        });
+                    $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
+                        .done(function(data) {
+                            myBarChart2.datasets[1].bars[x].value = data.length;
+                            myBarChart2.update();
+                            y++;
+                        })
+                        .fail(function() {
+                            alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
+                        });
+                    f.add(1, 'd');
+            }}
 
 
-            }
 
-            Peticiones();
 
-            /*
-            $.get('/api', { fecha1: f1.format(), fecha2: f2.format() })
-            .done(function(data) {
-                console.log(data);
-            })
-            .fail(function() {
-                alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
-            });
-            */
+
+
 
         } else {
-            console.log('mal')
+            console.log('No has selecioando 2 fechas')
         }
     });
 
 
+
     var dataChart = {
-        labels: ['test'],
+        labels: [],
         datasets: [
             {
             label: "Clientes",
@@ -79,7 +97,7 @@ $(window).load(function() {
             strokeColor: "rgba(220,220,220,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
-            data: [0]
+            data: []
             }
         ]
     }
@@ -87,7 +105,7 @@ $(window).load(function() {
 
 
     var data2 = {
-        labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+        labels: [],
         datasets: [
             {
             label: "PRO",
@@ -95,7 +113,7 @@ $(window).load(function() {
             strokeColor: "rgba(220,220,220,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: []
             },
             {
             label: "Particuler",
@@ -103,7 +121,7 @@ $(window).load(function() {
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
+            data: []
             }
         ]
     }
@@ -119,6 +137,7 @@ $(window).load(function() {
 
     var ctx2 = $("#myChart2").get(0).getContext("2d");
     var myBarChart2 = new Chart(ctx2).Bar(data2);
+
 
 
     var data2 = [
