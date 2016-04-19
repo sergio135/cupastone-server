@@ -30,7 +30,13 @@ $(window).load(function() {
                     var despues = moment(f.format('YYYY-MM-DD'));
                     despues.add(1, 'd');
                     myBarChart1.addData([0], f.format('DD/MM'));
-                    $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
+
+
+                    //{ fecha1:f.format(), fecha2:despues.format() }
+                    //{ fecha: { $gte: req.query.fecha1, $lte: req.query.fecha2 } }
+                    //{ fecha: { $gte:f.format(), $lte:despues.format() } }
+
+                    $.get('/api', { fecha:{$gte:f.format(), $lte:despues.format()} })
                         .done(function(data) {
                             myBarChart1.datasets[0].bars[x].value = data.length;
                             myBarChart1.update();
@@ -54,7 +60,7 @@ $(window).load(function() {
                     var despues = moment(f.format('YYYY-MM-DD'));
                     despues.add(1, 'd');
                     myBarChart2.addData([0,0], f.format('DD/MM'));
-                    $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
+                    $.get('/api', { fecha:{$gte:f.format(), $lte:despues.format()}, opcion1:'pro' })
                         .done(function(data) {
                             myBarChart2.datasets[0].bars[x].value = data.length;
                             myBarChart2.update();
@@ -63,7 +69,7 @@ $(window).load(function() {
                         .fail(function() {
                             alert('Se ha producido un fallo, intentelo de nuevo o verifique su conexion a internet');
                         });
-                    $.get('/api', { fecha1: f.format(), fecha2: despues.format() })
+                    $.get('/api', { fecha:{$gte:f.format(), $lte:despues.format()}, opcion1:'partculier' })
                         .done(function(data) {
                             myBarChart2.datasets[1].bars[x].value = data.length;
                             myBarChart2.update();

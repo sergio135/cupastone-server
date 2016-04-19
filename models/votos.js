@@ -9,6 +9,4 @@ var votoSchema = new Schema({
     fecha: { type: Date, default: Date.now }
 });
 
-var voto = mongoose.model('votos', votoSchema);
-
-module.exports = voto;
+module.exports = mongoose.model('votos', votoSchema);
