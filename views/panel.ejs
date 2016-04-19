@@ -2,58 +2,54 @@
 
 <main>
     <div class="container">
-        <div id="tabs">
-            <div>
-                <h3>Estadisticas Globales</h3>
-                <div class="area-tab">
-                    <div class="selectors">
-                        <div class="input-area-selectors">
-                            De <input type="date" class="fecha" id="fecha-desde"> hasta <input type="date" class="fecha" id="fecha-hasta">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div>
-                                <h3 class="title-chart">Encuestas realizadas</h3>
-                                <canvas id="myChart1" width="550" height="300"></canvas>
-                            </div>
-                            <div>
-                                <h3 class="title-chart">Tipo de cliente</h3>
-                                <canvas id="myChart2" width="550" height="300"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <h3 class="title-chart">Particuler</h3>
-                                    <canvas id="myChart3" width="250" height="250">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h3 class="title-chart">PRO</h3>
-                                    <canvas id="myChart4" width="250" height="250">
-                                </div>
-                                <div class="col-xs-6">
-                                    <h3 class="title-chart">Particuler</h3>
-                                    <canvas id="myChart5" width="250" height="250">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="area-tab">
+            <div class="selectors">
+                <div class="input-area-selectors">
+                    De <input type="date" class="fecha" id="fecha-desde"> hasta <input type="date" class="fecha" id="fecha-hasta">
                 </div>
             </div>
-            <div>
-                <h3>Estadisticas Locales</h3>
-                <div class="area-tab">
+            <div class="selectors">
+                <div class="input-area-agency">
+                    <input type="button" class="boton-agencias" id="paris" value="Paris">
+                    <input type="button" class="boton-agencias" id="rennes" value="Rennes">
+                    <input type="button" class="boton-agencias" id="lemans" value="Le Mans">
+                    <input type="button" class="boton-agencias" id="quimper" value="Quimper">
+                    <input type="button" class="boton-agencias" id="tours" value="Tours">
+                    <input type="button" class="boton-agencias" id="muzillac" value="Muzillac">
+                    <input type="button" class="boton-agencias" id="Nantes" value="Nantes">
+                    <input type="button" class="boton-agencias" id="cholet" value="Cholet">
+                    <input type="button" class="boton-agencias" id="larochesuryon" value="La roche-sur-yon">
+                    <input type="button" class="boton-agencias" id="limoges" value="Limoges">
+                    <input type="button" class="boton-agencias" id="pau" value="Pau">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <h3 class="title-chart">Encuestas realizadas</h3>
+                        <canvas id="myChart1" width="550" height="300"></canvas>
+                    </div>
+                    <div>
+                        <h3 class="title-chart">Tipo de cliente</h3>
+                        <canvas id="myChart2" width="550" height="300"></canvas>
+                    </div>
+                </div>
+                <div class="col-xs-6">
                     <div class="row">
                         <div class="col-xs-12">
-                            <input type="date" name="fechahora">
+                            <h3 class="title-chart">Clientes Nuevos/Antiguos</h3>
+                            <canvas id="myChart3" width="250" height="250">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">asd</div>
-                        <div class="col-xs-6">asd</div>
+                        <div class="col-xs-6">
+                            <h3 class="title-chart">Nouveau</h3>
+                            <canvas id="myChart4" width="250" height="250">
+                        </div>
+                        <div class="col-xs-6">
+                            <h3 class="title-chart">Cliente Habituel</h3>
+                            <canvas id="myChart5" width="250" height="250">
+                        </div>
                     </div>
                 </div>
             </div>
