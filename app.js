@@ -35,8 +35,6 @@ db.once('open', function() {
   console.log('bd conectada');
 });
 
-console.log(voto);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
