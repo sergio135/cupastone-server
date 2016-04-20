@@ -7,7 +7,6 @@ router.get('/', function(req, res) {
         voto.find(req.query, function (err, result) {
             if (err) return res.status(500).send(err.message);
             res.status(200).jsonp(result);
-            console.log('2 parametros')
         });
 });
 
