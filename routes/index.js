@@ -5,10 +5,7 @@ var voto = require('../models/votos');
 // Ruta de la home
 router.get('/', function(req, res) {
     if (req.signedCookies.cupa_stone_questionary_login == 'cupastone') {
-        voto.find(function (err, result) {
-            if (err) return console.error(err);
-            for (var rst of result) console.log(rst.nombre);
-        })
+
         res.render('panel');
     } else {
         res.render('index', { msg: '' });
