@@ -30,9 +30,11 @@ app.use('/api', api);
 //conecction a la abase de datos
 mongoose.connect('mongodb://164.132.228.245:27017/dbquestion');
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function() {
+    console.error('connection error:');
+});
 db.once('open', function() {
-  console.log('DB conectada');
+    console.log('DB conectada');
 });
 
 // catch 404 and forward to error handler
